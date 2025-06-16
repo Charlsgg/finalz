@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -6,28 +6,36 @@ function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [msg, setMsg] = useState('');
-  const [userType, setUserType] = useState(null);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
     setMsg('');
+    setLoading(true);
 
     try {
-      const res = await axios.post('http://localhost:3001/login', { email, password });
-      setMsg('✅ ' + res.data.message);
-      setUserType(res.data.user_type);
-      localStorage.setItem('token', res.data.token);
+      const res = await axios.post('http://localhost:3001/auth/login', {
+        email,
+        password,
+      });
+
+      const { token, user_type, message } = res.data;
+
+      setMsg('✅ ' + message);
+      localStorage.setItem('token', token);
+
+      // Navigate based on user type
+      if (user_type === 'admin') navigate('/admin/dashboard');
+      else if (user_type === 'teacher') navigate('/teacher/dashboard');
+      else if (user_type === 'student') navigate('/student/dashboard');
+      else setMsg('❌ Unknown user type');
     } catch (err) {
       setMsg('❌ ' + (err.response?.data?.message || 'Login failed'));
+    } finally {
+      setLoading(false);
     }
   };
-
-  useEffect(() => {
-    if (userType === 'admin') navigate('/admin/dashboard');
-    if (userType === 'teacher') navigate('/teacher/dashboard');
-    if (userType === 'student') navigate('/student/dashboard');
-  }, [userType, navigate]);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
@@ -50,8 +58,12 @@ function Login() {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          <button type="submit" className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
-            Login
+          <button
+            type="submit"
+            className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 disabled:opacity-50"
+            disabled={loading}
+          >
+            {loading ? 'Logging in...' : 'Login'}
           </button>
         </form>
         {msg && <p className="mt-4 text-center text-sm">{msg}</p>}
