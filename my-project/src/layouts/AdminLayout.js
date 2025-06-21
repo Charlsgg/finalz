@@ -1,6 +1,7 @@
 // src/layouts/AdminLayout.js
 import React from 'react';
-import { Menu, LogOut } from 'lucide-react';
+import { Menu } from 'lucide-react';
+import LogoutButton from '../components/LogoutButton'; // ← import it
 
 const AdminLayout = ({ children }) => (
   <div className="flex h-screen bg-gray-100">
@@ -10,9 +11,9 @@ const AdminLayout = ({ children }) => (
         <a href="#" className="hover:text-blue-600">Dashboard</a>
         <a href="#" className="hover:text-blue-600">Users</a>
         <a href="#" className="hover:text-blue-600">Reports</a>
-        <a href="#" className="hover:text-red-500 flex items-center gap-1">
-          <LogOut className="w-4 h-4" /> Logout
-        </a>
+        
+        {/* Use LogoutButton instead of <a> tag */}
+        <LogoutButton />
       </nav>
     </aside>
 
