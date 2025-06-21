@@ -1,20 +1,12 @@
-// src/layouts/AdminLayout.js
 import React from 'react';
 import { Menu } from 'lucide-react';
-import LogoutButton from '../components/LogoutButton'; // ← import it
+import RoleNavigation from '../components/RoleNavigations';
 
 const AdminLayout = ({ children }) => (
   <div className="flex h-screen bg-gray-100">
     <aside className="w-64 bg-white border-r hidden md:flex flex-col">
       <div className="p-6 text-xl font-bold text-blue-600 border-b">Admin Panel</div>
-      <nav className="flex flex-col p-4 space-y-4 text-gray-700">
-        <a href="#" className="hover:text-blue-600">Dashboard</a>
-        <a href="#" className="hover:text-blue-600">Users</a>
-        <a href="#" className="hover:text-blue-600">Reports</a>
-        
-        {/* Use LogoutButton instead of <a> tag */}
-        <LogoutButton />
-      </nav>
+      <RoleNavigation role="admin" />
     </aside>
 
     <div className="flex-1 flex flex-col">

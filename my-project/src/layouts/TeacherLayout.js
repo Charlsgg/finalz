@@ -1,19 +1,13 @@
 // src/layouts/TeacherLayout.js
 import React from 'react';
-import { Menu, BookOpenCheck, LogOut } from 'lucide-react';
+import { Menu } from 'lucide-react';
+import RoleNavigation from '../components/RoleNavigations';
 
 const TeacherLayout = ({ children }) => (
   <div className="flex h-screen bg-gray-50">
     <aside className="w-64 bg-white border-r hidden md:flex flex-col">
       <div className="p-6 text-xl font-bold text-purple-600 border-b">Teacher Portal</div>
-      <nav className="flex flex-col p-4 space-y-4 text-gray-700">
-        <a href="#" className="hover:text-purple-600">My Classes</a>
-        <a href="#" className="hover:text-purple-600">Attendance</a>
-        <a href="#" className="hover:text-purple-600">Grades</a>
-        <a href="#" className="hover:text-red-500 flex items-center gap-1">
-          <LogOut className="w-4 h-4" /> Logout
-        </a>
-      </nav>
+      <RoleNavigation role="teacher" colorClass="text-purple-600" />
     </aside>
 
     <div className="flex-1 flex flex-col">
