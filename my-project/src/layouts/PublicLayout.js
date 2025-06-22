@@ -1,70 +1,42 @@
 // src/layouts/PublicLayout.jsx
-import React, { useState } from 'react';
-import { Link, Outlet } from 'react-router-dom'; // ✅ Add 'Outlet' here
-import { MenuIcon, XIcon } from '@heroicons/react/outline';
+import React from 'react';
+import { Link, Outlet } from 'react-router-dom';
 
 function PublicLayout() {
-  const [navOpen, setNavOpen] = useState(false);
-
   return (
-    <div className="min-h-screen flex flex-col bg-white">
+    <div className="min-h-screen flex flex-col bg-gray-50">
       {/* Navbar */}
-      <header className="bg-gradient-to-r from-blue-600 to-blue-800 px-6 py-4 shadow-md">
-        <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <Link to="/" className="text-2xl font-bold text-white">EduPortal</Link>
-
-          {/* Desktop */}
-          <nav className="hidden md:flex space-x-8">
-            <Link to="/login" className="text-white hover:text-blue-200 transition">Login</Link>
-            <Link to="/signup" className="text-white hover:text-blue-200 transition">Sign Up</Link>
-          </nav>
-
-          {/* Mobile menu icon */}
-          <button
-            className="md:hidden text-white focus:outline-none"
-            onClick={() => setNavOpen(prev => !prev)}
+      <header className="bg-white shadow-md p-4 flex flex-wrap justify-between items-center">
+        <Link
+          to="/"
+          className="text-2xl font-bold text-blue-700 hover:text-blue-800 transition-colors"
+        >
+          EduPortal
+        </Link>
+        <nav className="space-x-4 mt-2 sm:mt-0">
+          <Link
+            to="/login"
+            className="text-blue-600 hover:text-blue-800 transition-colors"
           >
-            {navOpen ? <XIcon className="h-6 w-6" /> : <MenuIcon className="h-6 w-6" />}
-          </button>
-        </div>
-
-        {/* Mobile menu */}
-        {navOpen && (
-          <nav className="md:hidden bg-blue-700 px-6 py-4 space-y-4">
-            <Link to="/login" onClick={() => setNavOpen(false)} className="block text-white hover:text-blue-200 transition">Login</Link>
-            <Link to="/signup" onClick={() => setNavOpen(false)} className="block text-white hover:text-blue-200 transition">Sign Up</Link>
-          </nav>
-        )}
+            Login
+          </Link>
+          <Link
+            to="/signup"
+            className="text-blue-600 hover:text-blue-800 transition-colors"
+          >
+            Sign Up
+          </Link>
+        </nav>
       </header>
 
-      {/* Layout outlet for child pages */}
-      <main className="flex-grow">
-        <div className="max-w-3xl mx-auto px-4 py-8">
-          <Outlet />
-        </div>
+      {/* Page Content */}
+      <main className="flex-grow container mx-auto px-4 py-6">
+        <Outlet />
       </main>
 
       {/* Footer */}
-      <footer className="bg-blue-900 text-white">
-        <div className="max-w-6xl mx-auto px-6 py-8 grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div>
-            <h4 className="font-semibold">EduPortal</h4>
-            <p className="text-sm text-blue-200">Smart education management.</p>
-          </div>
-          <div>
-            <h4 className="font-semibold">Navigate</h4>
-            <Link to="/login" className="block text-sm hover:underline">Login</Link>
-            <Link to="/signup" className="block text-sm hover:underline">Sign Up</Link>
-          </div>
-          <div>
-            <h4 className="font-semibold">Company</h4>
-            <Link to="#" className="block text-sm hover:underline">Privacy Policy</Link>
-            <Link to="#" className="block text-sm hover:underline">Terms of Use</Link>
-          </div>
-        </div>
-        <div className="border-t border-blue-800 py-4 text-center text-sm">
-          &copy; {new Date().getFullYear()} EduPortal. All rights reserved.
-        </div>
+      <footer className="bg-white p-4 text-center text-gray-500 text-sm border-t">
+        &copy; {new Date().getFullYear()} EduPortal. All rights reserved.
       </footer>
     </div>
   );
