@@ -80,7 +80,7 @@ function Signup() {
           </button>
         </form>
         <p className="mt-4 text-center text-sm">
-          Already have an account? <Link to="/" className="text-blue-600 hover:underline">Login</Link>
+          Already have an account? <Link to="/login" className="text-blue-600 hover:underline">Login</Link>
         </p>
         {msg && <p className="mt-2 text-center text-sm">{msg}</p>}
       </div>
