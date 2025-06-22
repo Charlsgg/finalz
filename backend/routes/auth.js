@@ -29,11 +29,18 @@ router.post('/login', (req, res) => {
 });
 
 // Signup Route
+// Signup Route
 router.post('/signup', async (req, res) => {
   const { name, email, password, user_type } = req.body;
 
   if (!name || !email || !password || !user_type) {
     return res.status(400).json({ message: 'All fields are required' });
+  }
+
+  // Email format validation using regex
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    return res.status(400).json({ message: 'Invalid email format' });
   }
 
   db.query('SELECT * FROM users WHERE email = ?', [email], async (err, results) => {
