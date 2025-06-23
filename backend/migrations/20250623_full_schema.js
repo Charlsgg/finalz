@@ -3,12 +3,11 @@ exports.up = function(knex) {
 
     // USERS table
     .createTable('users', table => {
-      table.increments('id').primary();
+      table.increments('id').primary(); // This will serve as the QR code value
       table.string('name').notNullable();
       table.string('email').unique().notNullable();
       table.string('password').notNullable();
       table.enu('user_type', ['admin', 'teacher', 'student']).defaultTo('student');
-      table.string('qr_code_token').unique().nullable(); // For QR scanning
       table.timestamps(true, true);
     })
 
@@ -39,7 +38,7 @@ exports.up = function(knex) {
       table.string('scanned_by').nullable();
     })
 
-    // Optional CLASS_SESSIONS table
+    // CLASS_SESSIONS table
     .createTable('class_sessions', table => {
       table.increments('id').primary();
       table.integer('class_id').unsigned().references('id').inTable('classes').onDelete('CASCADE');
